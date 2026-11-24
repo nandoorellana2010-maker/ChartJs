@@ -1,5 +1,6 @@
 const express = require('express')
 const Employees = require('./modelos/Employees')
+const Product = require('./modelos/Product')
 const sequelize = require('./conexion/db')
 
 const app = express() 
@@ -134,7 +135,7 @@ app.get('/avg-product-by-valuecurrency', async (req, resp) => {
         const result = await Product.findAll({
 
             attributes: [
-                'valueCurrency'
+                'valueCurrency',
                 [sequelize.fn('AVG', sequelize.col('value')), 'promedio_productos_por_tipo_moneda']
             ],
             group: ['valueCurrency']
@@ -160,7 +161,8 @@ app.get('/avg-n-count-product-by-linecode', async (req, resp) => {
 
             attributes: [
                 'lineCode',
-                [sequelize.fn('AVG', 'COUNT', sequelize.col('VALUE', '*')), 'valor_promedio', 'cantidad_productos']
+                [sequelize.fn('AVG', sequelize.col('value')), 'valor_promedio'],
+                [sequelize.fn('COUNT', sequelize.col('*')), 'cantidad_productos']
             ],
             group: ['lineCode']
         })

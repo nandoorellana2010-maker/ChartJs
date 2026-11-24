@@ -4,7 +4,7 @@ const { Sequelize } = require('sequelize')
 const sequelize = new Sequelize(
     'segundo_parcial',
     'root',
-    'admin123',
+    'Admin',
     {
         host: 'localhost',
         port: 3306,
